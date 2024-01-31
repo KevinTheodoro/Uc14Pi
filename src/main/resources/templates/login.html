@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Login</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" th:href="@{css/style.css}"/>
+        <script th:src="@{/jquery/jquery.js}"></script>
+        <script th:src="@{/jquery/jquery.validate.js}"></script>
+    </head>
+    <body>
+        <button onclick="window.location.href='/cadastrar'">Cadastrar</button>
+        <div class="centro">
+            <img id="logo" th:src="@{/imagems/logo.png}" alt="logo"/>
+            <form id="formLogin" action="/login" method="POST">
+                <label for="login">Login:</label>
+                <input id="login" name="login" type="text"/>
+                <br/>
+                <label for="senha">Senha</label>
+                <input id="senha" name="senha" type="password"/>
+                <br/>
+                <input type="submit" value="Entrar"/>
+            </form>
+        </div>
+        <script th:src="@{/js/login.js}"></script>
+    </body>
+</html>

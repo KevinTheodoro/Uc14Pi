@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Fichas do Paciente</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" th:href="@{css/style.css}"/>
+    </head>
+    <body>
+        <header th:insert="~{navbar.html :: nav}"></header>
+        <div class="centro">
+            <h1>Fichas do Paciente</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Data</th>
+                        <th>Ficha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>01/01/2024</td>
+                        <td><a th:href="@{dados_ficha}">Dados da ficha</a></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="back" onclick="window.location.href='/listagem_pacientes'">Voltar</button>
+        </div>
+    </body>
+</html>

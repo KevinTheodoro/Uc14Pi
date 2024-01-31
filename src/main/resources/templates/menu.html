@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Menu</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" th:href="@{css/style.css}"/>
+    </head>
+    <body>
+        <header th:insert="~{navbar.html :: nav}"></header>
+        <div class="centro">
+            <h1>Gerenciamento de<br/>Pacientes e Consultas</h1>
+            <div id="menu">
+                <div>
+                    <p>Cadastro</p>
+                    <div class="borda">
+                        <button onclick="window.location.href='/cadastro_paciente'">Cadastro Paciente</button>
+                        <button onclick="window.location.href='/cadastro_consulta'">Cadastro Consulta</button>
+                    </div>
+                </div>
+                <div>
+                    <p>Listagem</p>
+                    <div class="borda">
+                        <button onclick="window.location.href='/listagem_pacientes'">Listagem Pacientes</button>
+                        <button onclick="window.location.href='/listagem_consultas'">Listagem Consultas</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

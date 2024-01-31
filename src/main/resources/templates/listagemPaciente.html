@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Listagem Pacientes</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" th:href="@{css/style.css}"/>
+    </head>
+    <body>
+        <header th:insert="~{navbar.html :: nav}"></header>
+        <div class="centro">
+            <h1>Listagem de Pacientes</h1>
+            <p>Nome: <input id="nome" type="text" name="nome"/></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Nascimento</th>
+                        <th>CPF</th>
+                        <th>Opções</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Paciente Teste</td>
+                        <td>01/01/2000</td>
+                        <td>000.000.000-00</td>
+                        <td>
+                            <button onclick="window.location.href='/cadastro_ficha'">Criar Ficha</button>
+                            <button onclick="window.location.href='/fichas_paciente'">Fichas Paciente</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="back" onclick="window.location.href='/menu'">Voltar</button>
+        </div>
+    </body>
+</html>

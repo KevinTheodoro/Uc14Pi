@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Cadastro Paciente</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" th:href="@{css/style.css}"/>
+        <script th:src="@{/jquery/jquery.js}"></script>
+        <script th:src="@{/jquery/jquery.validate.js}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    </head>
+    <body>
+        <header th:insert="~{navbar.html :: nav}"></header>
+        <div class="centro">
+            <h1>Cadastro de Paciente</h1>
+            <form id="formPaciente" class="borda" th:action="@{/cadastro_paciente}" method="POST">
+                <label for="nome">Nome:</label>
+                <input id="nome" type="text" name="nome"/>
+                <br/>
+                <label for="dataNascimento">Data Nascimento:</label>
+                <input id="dataNascimento" type="date" name="dataNascimento"/>
+                <br/>
+                <input id="homen" type="radio" name="sexo" value="homen" />
+                <label for="homen">Homen</label>
+                <input id="mulher" type="radio" name="sexo" value="mulher"/>
+                <label for="mulher">Mulher</label>
+                <br/>
+                <label for="cpf">CPF:</label>
+                <input id="cpf" type="text" name="cpf" placeholder="000.000.000-00"/>
+                <br/>
+                <input id="cadastrarPaciente" type="submit" value="Cadastrar"/>
+            </form>
+            <button class="back" onclick="window.location.href='/menu'">Cancelar</button>
+        </div>
+        <script th:src="@{/js/cadastroPaciente.js}"></script>
+    </body>
+</html>

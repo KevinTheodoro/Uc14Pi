@@ -1,0 +1,104 @@
+body {
+    width: auto;
+    height: auto;
+    font-family: sans-serif;
+    background-color: #ccffcc;
+}
+
+h1 {
+    text-align: center;
+    width: 300px;
+    margin: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table {
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+    width: max-content;
+}
+
+form {
+    padding: 10px;
+}
+
+textarea {
+    resize: none;
+}
+
+th, td {
+    background-color: white;
+    border: 1px solid black;
+}
+
+.centro {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+    width: min-content;
+    height: min-content;
+}
+
+.back {
+    margin-top: 10px;
+}
+
+#logo {
+    display: grid;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    width: 90px;
+}
+
+#menu {
+    display: flex;
+    margin: auto;
+    padding: 10px;
+}
+
+#menu p {
+    margin-top: auto;
+    margin-bottom: 0;
+    margin-left: 5px;
+}
+
+#menu div div {
+    display: grid;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#menu button {
+    margin: 10px;
+    width: 150px;
+    height: 50px;
+}
+
+form input[type=text], input[type=date], input[type=radio], input[type=time], select {
+    margin-bottom: 10px;
+}
+
+#formPaciente {
+    padding: 20px;
+}
+
+#homen {
+    margin-left: 10px;
+}
+
+#mulher {
+    margin-left: 60px;
+}
+
+#formUsuario input{
+    margin-bottom: 10px;
+}
+
+.borda {
+    border: 1px solid black;
+}
