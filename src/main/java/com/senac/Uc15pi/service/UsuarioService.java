@@ -21,4 +21,8 @@ public class UsuarioService {
 
         return usuario;
     }
+
+    public Usuario getUsuarioLogin(String login) {
+        return usuarioRepository.findByLogin(login);
+    }
 }

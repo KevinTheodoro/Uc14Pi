@@ -1,26 +1,32 @@
 package com.senac.Uc15pi.data;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.util.Date;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+
 
 /**
  *
  * @author Kevin
  */
-@Getter
-@Setter
 @Data
 @Entity
 @Table(name="Paciente")
 public class Paciente {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String nome;
     private Date dataNasc;
     private char sexo;
     private String cpf;
+    @ManyToOne
+    @JoinColumn(name = "terapeuta_id", referencedColumnName = "id")
     private Terapeuta terapeuta;
 }

@@ -8,15 +8,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+
 
 /**
  *
  * @author Kevin
  */
-@Getter
-@Setter
 @Data
 @Entity
 @Table(name="Usuario")

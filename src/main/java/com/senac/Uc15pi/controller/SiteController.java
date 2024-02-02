@@ -1,7 +1,17 @@
 package com.senac.Uc15pi.controller;
 
+import com.senac.Uc15pi.data.Terapeuta;
+import com.senac.Uc15pi.data.Usuario;
+import com.senac.Uc15pi.service.TerapeutaService;
+import com.senac.Uc15pi.service.UsuarioService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -11,88 +21,129 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class SiteController {
+    @Autowired
+    UsuarioService usuarioService;
+    @Autowired
+    TerapeutaService terapeutaService;
 
     @RequestMapping("/")
-    public String login() {
-        return "login";
+    public ModelAndView login(HttpServletRequest request) {
+        HttpSession sessao = request.getSession();
+        if(validar(sessao)) return new ModelAndView("menu");
+        return new ModelAndView("login");
     }
 
     @PostMapping("/login")
-    public String realizarLogin(/*Usuario usuarioRequest*/) {
-        return "redirect:/menu";
+    public String realizarLogin(HttpServletRequest request, Usuario usuarioRequest) {
+        HttpSession sessao = request.getSession();
+        Usuario usuario = usuarioService.getUsuarioLogin(usuarioRequest.getLogin());
+        if(sessao != null && usuario != null && usuarioRequest.getLogin().equals(usuario.getLogin()) && usuarioRequest.getSenha().equals(usuario.getSenha()))
+            sessao.setAttribute("usuario", usuario.getLogin());
+        return "redirect:/";
     }
 
     @RequestMapping("/cadastrar")
-    public String cadastro() {
+    public String cadastro(Model model) {
+        model.addAttribute("terapeuta", new Terapeuta());
+        model.addAttribute("usuario", new Usuario());
         return "cadastro";
     }
 
     @PostMapping("/cadastro")
-    public String realizarCadastro(/*Usuario usuario*/) {
+    public String realizarCadastro(@ModelAttribute Terapeuta terapeuta, @ModelAttribute Usuario usuario) {
+        if(terapeuta != null && usuario != null) {
+            terapeutaService.criarTerapeuta(terapeuta);
+            usuario.setTerapeuta(terapeuta);
+            usuarioService.criarUsuario(usuario);
+        }
         return "redirect:/";
     }
 
     @RequestMapping("/logoff")
-    public ModelAndView fazLogoff() {
+    public ModelAndView fazLogoff(HttpServletRequest request) {
+        HttpSession sessao = request.getSession();
+        if(sessao != null) sessao.removeAttribute("usuario");
         return new ModelAndView("redirect:/");
     }
 
     @RequestMapping("/menu")
-    public String menu() {
-        return "menu";
+    public ModelAndView menu(HttpServletRequest request) {
+        HttpSession sessao = request.getSession();
+        if(validar(sessao)) return new ModelAndView("menu");
+        return new ModelAndView("redirect:/");
     }
 
     @RequestMapping("/cadastro_paciente")
-    public String cadastroPaciente() {
-        return "cadastroPaciente";
+    public ModelAndView cadastroPaciente(HttpServletRequest request) {
+        HttpSession sessao = request.getSession();
+        if(validar(sessao)) return new ModelAndView("cadastroPaciente");
+        return new ModelAndView("redirect:/");
     }
 
     @PostMapping("/cadastro_paciente")
-    public String cadastrarPaciente() {
-        return "redirect:/menu";
+    public ModelAndView cadastrarPaciente(HttpServletRequest request) {
+        HttpSession sessao = request.getSession();
+        if(validar(sessao)) return new ModelAndView("redirect:/menu");
+        return new ModelAndView("redirect:/");
     }
 
     @RequestMapping("/cadastro_consulta")
-    public String cadastroConsulta() {
-        return "cadastroConsulta";
+    public ModelAndView cadastroConsulta(HttpServletRequest request) {
+        HttpSession sessao = request.getSession();
+        if(validar(sessao)) return new ModelAndView("cadastroConsulta");
+        return new ModelAndView("redirect:/");
     }
 
     @PostMapping("/cadastro_consulta")
-    public String cadastrarConsulta() {
-        return "redirect:/menu";
+    public ModelAndView cadastrarConsulta(HttpServletRequest request) {
+        HttpSession sessao = request.getSession();
+        if(validar(sessao)) return new ModelAndView("redirect:/menu");
+        return new ModelAndView("redirect:/");
     }
 
     @RequestMapping("/listagem_pacientes")
-    public String listagemPaciente() {
-        return "listagemPaciente";
+    public ModelAndView listagemPaciente(HttpServletRequest request) {
+        HttpSession sessao = request.getSession();
+        if(validar(sessao)) return new ModelAndView("listagemPaciente");
+        return new ModelAndView("redirect:/");
     }
 
     @RequestMapping("/listagem_consultas")
-    public String listagemConsulta() {
-        return "listagemConsulta";
+    public ModelAndView listagemConsulta(HttpServletRequest request) {
+        HttpSession sessao = request.getSession();
+        if(validar(sessao)) return new ModelAndView("listagemConsulta");
+        return new ModelAndView("redirect:/");
     }
 
     @RequestMapping("/cadastro_ficha")
-    public String cadastroFicha() {
-        return "cadastroFicha";
+    public ModelAndView cadastroFicha(HttpServletRequest request) {
+        HttpSession sessao = request.getSession();
+        if(validar(sessao)) return new ModelAndView("cadastroFicha");
+        return new ModelAndView("redirect:/");
     }
 
     @PostMapping("/cadastro_ficha")
-    public String cadastrarFicha() {
-        return "redirect:/listagem_pacientes";
+    public ModelAndView cadastrarFicha(HttpServletRequest request) {
+        HttpSession sessao = request.getSession();
+        if(validar(sessao)) return new ModelAndView("redirect:/listagem_pacientes");
+        return new ModelAndView("redirect:/");
     }
 
     @RequestMapping("/fichas_paciente")
-    public String fichasPaciente() {
-        return "fichasPaciente";
+    public ModelAndView fichasPaciente(HttpServletRequest request) {
+        HttpSession sessao = request.getSession();
+        if(validar(sessao)) return new ModelAndView("fichasPaciente");
+        return new ModelAndView("redirect:/");
     }
 
     @RequestMapping("/dados_ficha")
-    public String dadosFicha() {
-        return "dadosFicha";
+    public ModelAndView dadosFicha(HttpServletRequest request) {
+        HttpSession sessao = request.getSession();
+        if(validar(sessao)) return new ModelAndView("dadosFicha");
+        return new ModelAndView("redirect:/");
     }
 
-//    private boolean validar(HttpSession sessao) {
-//        return sessao != null && sessao.getAttribute("usuario") != null && sessao.getAttribute("usuario").equals(getUsuarioByLogin((String)sessao.getAttribute("usuario")).getLogin());
-//    }
+    private boolean validar(HttpSession sessao) {
+        return sessao != null && sessao.getAttribute("usuario") != null && sessao.getAttribute("usuario").equals(usuarioService.getUsuarioLogin((String)sessao.getAttribute("usuario")).getLogin());
+    }
 }
