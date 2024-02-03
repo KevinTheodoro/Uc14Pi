@@ -1,9 +1,11 @@
 package com.senac.Uc15pi.controller;
 
+import com.senac.Uc15pi.data.Consulta;
 import com.senac.Uc15pi.data.Ficha;
 import com.senac.Uc15pi.data.Paciente;
 import com.senac.Uc15pi.data.Terapeuta;
 import com.senac.Uc15pi.data.Usuario;
+import com.senac.Uc15pi.service.ConsultaService;
 import com.senac.Uc15pi.service.FichaService;
 import com.senac.Uc15pi.service.PacienteService;
 import com.senac.Uc15pi.service.TerapeutaService;
@@ -33,6 +35,8 @@ public class SiteController {
     PacienteService pacienteService; 
     @Autowired
     FichaService fichaService;
+    @Autowired
+    ConsultaService consultaService;
 
     @RequestMapping("/")
     public ModelAndView login(HttpServletRequest request) {
@@ -104,16 +108,28 @@ public class SiteController {
     }
 
     @RequestMapping("/cadastro_consulta")
-    public ModelAndView cadastroConsulta(HttpServletRequest request) {
+    public ModelAndView cadastroConsulta(HttpServletRequest request, Model model) {
         HttpSession sessao = request.getSession();
-        if(validar(sessao)) return new ModelAndView("cadastroConsulta");
+        if(validar(sessao)) {
+            Consulta consulta = new Consulta();
+            Terapeuta terapeuta = usuarioService.getUsuarioLogin((String)sessao.getAttribute("usuario")).getTerapeuta();
+            consulta.setTerapeuta(terapeuta);
+            List<Paciente> pacientes = pacienteService.listarPacientes(terapeuta);
+            model.addAttribute("pacientes", pacientes);
+            model.addAttribute("terapeuta", terapeuta);
+            model.addAttribute("consulta", consulta);
+            return new ModelAndView("cadastroConsulta");
+        }
         return new ModelAndView("redirect:/");
     }
 
     @PostMapping("/cadastro_consulta")
-    public ModelAndView cadastrarConsulta(HttpServletRequest request) {
+    public ModelAndView cadastrarConsulta(HttpServletRequest request, @ModelAttribute Consulta consulta) {
         HttpSession sessao = request.getSession();
-        if(validar(sessao)) return new ModelAndView("redirect:/menu");
+        if(validar(sessao) && consulta != null) {
+            consultaService.criarConsulta(consulta);
+            return new ModelAndView("redirect:/menu");
+        }
         return new ModelAndView("redirect:/");
     }
 
@@ -130,9 +146,14 @@ public class SiteController {
     }
 
     @RequestMapping("/listagem_consultas")
-    public ModelAndView listagemConsulta(HttpServletRequest request) {
+    public ModelAndView listagemConsulta(HttpServletRequest request, Model model) {
         HttpSession sessao = request.getSession();
-        if(validar(sessao)) return new ModelAndView("listagemConsulta");
+        if(validar(sessao)) {
+            Terapeuta terapeuta = usuarioService.getUsuarioLogin((String)sessao.getAttribute("usuario")).getTerapeuta();
+            List<Consulta> consultas = consultaService.listarConsultas(terapeuta);
+            model.addAttribute("consultas", consultas);
+            return new ModelAndView("listagemConsulta");
+        }
         return new ModelAndView("redirect:/");
     }
 
