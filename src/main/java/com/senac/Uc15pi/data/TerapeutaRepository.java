@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface TerapeutaRepository extends JpaRepository<Terapeuta, Integer> {
-    
+
 }

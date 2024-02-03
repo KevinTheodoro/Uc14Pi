@@ -17,19 +17,24 @@
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Nascimento</th>
+                        <th>Sexo</th>
                         <th>CPF</th>
                         <th>Opções</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Paciente Teste</td>
-                        <td>01/01/2000</td>
-                        <td>000.000.000-00</td>
+                    <tr th:each="paciente : ${pacientes}">
+                        <td th:text="${paciente.id}"></td>
+                        <td th:text="${paciente.nome}"></td>
+                        <td th:text="${paciente.dataNasc}"></td>
                         <td>
-                            <button onclick="window.location.href='/cadastro_ficha'">Criar Ficha</button>
-                            <button onclick="window.location.href='/fichas_paciente'">Fichas Paciente</button>
+                            <span th:if="${paciente.sexo} == 'h'">Homen</span>
+                            <span th:if="${paciente.sexo} == 'm'">Mulher</span>
+                        </td>
+                        <td th:text='${paciente.cpf}'></td>
+                        <td>
+                            <button th:onclick="'window.location.href=\'' + @{/cadastro_ficha?paciente_id=__${paciente.id}__} + '\''">Criar Ficha</button>
+                            <button th:onclick="'window.location.href=\'' + @{/fichas_paciente?paciente_id=__${paciente.id}__} + '\''">Fichas Paciente</button>
                         </td>
                     </tr>
                 </tbody>

@@ -4,13 +4,13 @@ $("#formPaciente").validate({
             required: true,
             minlength: 3
         },
-        dataNascimento: {
+        dataNasc: {
             required: true,
             date: true
         },
         sexo: {
             required: true
-//            focusInvalid: false
+            //focusInvalid: false
         },
         cpf: {
             required: true,
@@ -22,7 +22,7 @@ $("#formPaciente").validate({
             required: "Campo nome é obrigatório",
             minlength: "O nome deve ter ao menos 3 caracteres"
         },
-        dataNascimento: {
+        dataNasc: {
             required: "Campo Data Nascimento é obrigatório",
             date: "A data precisa ser valida"
         },

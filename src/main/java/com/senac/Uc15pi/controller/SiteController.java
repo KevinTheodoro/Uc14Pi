@@ -1,7 +1,9 @@
 package com.senac.Uc15pi.controller;
 
+import com.senac.Uc15pi.data.Paciente;
 import com.senac.Uc15pi.data.Terapeuta;
 import com.senac.Uc15pi.data.Usuario;
+import com.senac.Uc15pi.service.PacienteService;
 import com.senac.Uc15pi.service.TerapeutaService;
 import com.senac.Uc15pi.service.UsuarioService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,6 +26,8 @@ public class SiteController {
     UsuarioService usuarioService;
     @Autowired
     TerapeutaService terapeutaService;
+    @Autowired
+    PacienteService pacienteService; 
 
     @RequestMapping("/")
     public ModelAndView login(HttpServletRequest request) {
@@ -74,16 +77,24 @@ public class SiteController {
     }
 
     @RequestMapping("/cadastro_paciente")
-    public ModelAndView cadastroPaciente(HttpServletRequest request) {
+    public ModelAndView cadastroPaciente(HttpServletRequest request, Model model) {
         HttpSession sessao = request.getSession();
-        if(validar(sessao)) return new ModelAndView("cadastroPaciente");
+        if(validar(sessao)) {
+            Paciente paciente = new Paciente();
+            paciente.setTerapeuta(usuarioService.getUsuarioLogin((String)sessao.getAttribute("usuario")).getTerapeuta());
+            model.addAttribute("paciente", paciente);
+            return new ModelAndView("cadastroPaciente");
+        }
         return new ModelAndView("redirect:/");
     }
 
     @PostMapping("/cadastro_paciente")
-    public ModelAndView cadastrarPaciente(HttpServletRequest request) {
+    public ModelAndView cadastrarPaciente(HttpServletRequest request, @ModelAttribute Paciente paciente) {
         HttpSession sessao = request.getSession();
-        if(validar(sessao)) return new ModelAndView("redirect:/menu");
+        if(validar(sessao) && paciente != null) {
+            pacienteService.criarPaciente(paciente);
+            return new ModelAndView("redirect:/menu");
+        }
         return new ModelAndView("redirect:/");
     }
 
@@ -102,9 +113,13 @@ public class SiteController {
     }
 
     @RequestMapping("/listagem_pacientes")
-    public ModelAndView listagemPaciente(HttpServletRequest request) {
+    public ModelAndView listagemPaciente(HttpServletRequest request, Model model) {
         HttpSession sessao = request.getSession();
-        if(validar(sessao)) return new ModelAndView("listagemPaciente");
+        if(validar(sessao)) {
+            Terapeuta terapeuta = usuarioService.getUsuarioLogin((String)sessao.getAttribute("usuario")).getTerapeuta();
+            model.addAttribute("pacientes", pacienteService.listarPacientes(terapeuta));
+            return new ModelAndView("listagemPaciente");
+        }
         return new ModelAndView("redirect:/");
     }
 
@@ -116,9 +131,12 @@ public class SiteController {
     }
 
     @RequestMapping("/cadastro_ficha")
-    public ModelAndView cadastroFicha(HttpServletRequest request) {
+    public ModelAndView cadastroFicha(HttpServletRequest request, Model model, Integer pacienteId) {
         HttpSession sessao = request.getSession();
-        if(validar(sessao)) return new ModelAndView("cadastroFicha");
+        if(validar(sessao)) {
+            model.addAttribute("paciente_id", pacienteId);
+            return new ModelAndView("cadastroFicha");
+        }
         return new ModelAndView("redirect:/");
     }
 
@@ -130,16 +148,22 @@ public class SiteController {
     }
 
     @RequestMapping("/fichas_paciente")
-    public ModelAndView fichasPaciente(HttpServletRequest request) {
+    public ModelAndView fichasPaciente(HttpServletRequest request, Model model, Integer pacienteId) {
         HttpSession sessao = request.getSession();
-        if(validar(sessao)) return new ModelAndView("fichasPaciente");
+        if(validar(sessao)) {
+            model.addAttribute("paciente_id", pacienteId);
+            return new ModelAndView("fichasPaciente");
+        }
         return new ModelAndView("redirect:/");
     }
 
     @RequestMapping("/dados_ficha")
-    public ModelAndView dadosFicha(HttpServletRequest request) {
+    public ModelAndView dadosFicha(HttpServletRequest request, Model model, Integer pacienteId) {
         HttpSession sessao = request.getSession();
-        if(validar(sessao)) return new ModelAndView("dadosFicha");
+        if(validar(sessao)) {
+            model.addAttribute("paciente_id", pacienteId);
+            return new ModelAndView("dadosFicha");
+        }
         return new ModelAndView("redirect:/");
     }
 
