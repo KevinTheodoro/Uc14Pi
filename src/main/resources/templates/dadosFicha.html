@@ -9,8 +9,8 @@
     <body>
         <header th:insert="~{navbar.html :: nav}"></header>
         <div class="centro">
-            <p>Data: <input type="date" name="name" disabled="disabled"/></p>
-            <textarea id="ficha" name="ficha" rows="10" cols="50" disabled="disabled"></textarea>
+            <p>Data: <input type="date" name="name" th:value="${ficha.data}" disabled="disabled"/></p>
+            <textarea id="ficha" name="ficha" th:text="${ficha.conteudoFicha}" rows="10" cols="50" disabled="disabled"></textarea>
             <button class="back" onclick="window.location.href='/listagem_pacientes'">Voltar</button>
         </div>
     </body>

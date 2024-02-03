@@ -16,13 +16,15 @@
                         <th>ID</th>
                         <th>Data</th>
                         <th>Ficha</th>
+                        <th>Paciente</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>01/01/2024</td>
-                        <td><a th:href="@{dados_ficha}">Dados da ficha</a></td>
+                    <tr th:each="ficha : ${fichas}">
+                        <td th:text="${ficha.id}"></td>
+                        <td th:text="${ficha.data}"></td>
+                        <td><a th:href="@{/dados_ficha?fichaId=__${ficha.id}__}" th:text="${ficha.conteudoFicha}"></a></td>
+                        <td th:text="${ficha.paciente.nome}"></td>
                     </tr>
                 </tbody>
             </table>

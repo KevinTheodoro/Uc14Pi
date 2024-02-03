@@ -4,7 +4,7 @@ $("#formFicha").validate({
             required: true,
             date: true
         },
-        ficha: {
+        conteudoFicha: {
             required: true
         }
     },
@@ -13,7 +13,7 @@ $("#formFicha").validate({
             required: "Campo Data é obrigatório",
             date: "A data precisa ser valida"
         },
-        ficha: {
+        conteudoFicha: {
             required: "O campo ficha é obrigatório"
         }
     }

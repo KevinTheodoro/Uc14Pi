@@ -10,7 +10,7 @@
         <header th:insert="~{navbar.html :: nav}"></header>
         <div class="centro">
             <h1>Listagem de Pacientes</h1>
-            <p>Nome: <input id="nome" type="text" name="nome"/></p>
+            <!--<p>Nome: <input id="nome" type="text" name="nome"/></p>-->
             <table>
                 <thead>
                     <tr>
@@ -33,8 +33,8 @@
                         </td>
                         <td th:text='${paciente.cpf}'></td>
                         <td>
-                            <button th:onclick="'window.location.href=\'' + @{/cadastro_ficha?paciente_id=__${paciente.id}__} + '\''">Criar Ficha</button>
-                            <button th:onclick="'window.location.href=\'' + @{/fichas_paciente?paciente_id=__${paciente.id}__} + '\''">Fichas Paciente</button>
+                            <button th:onclick="'window.location.href=\'' + @{/cadastro_ficha?pacienteId=__${paciente.id}__} + '\''">Criar Ficha</button>
+                            <button th:onclick="'window.location.href=\'' + @{/fichas_paciente?pacienteId=__${paciente.id}__} + '\''">Fichas Paciente</button>
                         </td>
                     </tr>
                 </tbody>
