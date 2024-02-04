@@ -15,6 +15,9 @@ $("#formUsuario").validate({
         },
         email: {
             email: true
+        },
+        cpf: {
+            minlength: 14
         }
     },
     messages: {
@@ -33,6 +36,11 @@ $("#formUsuario").validate({
         },
         email: {
             email: "Email deve ser valido"
+        },
+        cpf: {
+            minlength: "O CPF deve ser valido"
         }
     }
 });
+
+$('#cpf').mask('000.000.000-00');
